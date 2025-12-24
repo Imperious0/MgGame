@@ -28,7 +28,7 @@ namespace Game.SingletonHelper
 
         protected void Awake()
         {
-            if (_instance != null) { Destroy(this); return; }
+            if (_instance != null) { Destroy(gameObject); return; }
             _instance = this as T;
 
             OnAwake();

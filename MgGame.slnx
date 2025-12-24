@@ -46,7 +46,6 @@
   <Project Path="Unity.AI.Navigation.Updater.csproj" />
   <Project Path="Unity.AdaptivePerformance.csproj" />
   <Project Path="UnityEditor.UI.csproj" />
-  <Project Path="Game.NavigationHelper.csproj" />
   <Project Path="Unity.Notifications.csproj" />
   <Project Path="Unity.AI.Navigation.Editor.csproj" />
   <Project Path="Unity.Multiplayer.Center.Common.csproj" />

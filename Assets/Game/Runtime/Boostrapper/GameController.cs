@@ -1,5 +1,6 @@
 using Game.SingletonHelper;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game.Bootstrapper
 {
@@ -9,8 +10,11 @@ namespace Game.Bootstrapper
         {
             Application.targetFrameRate = 60;
             Screen.orientation = ScreenOrientation.Portrait;
-        }
 
+            DontDestroyOnLoad(this.gameObject);
+
+            SceneManager.LoadScene(Models.SceneNames.MainMenuScene);
+        }
 
     }
 }
