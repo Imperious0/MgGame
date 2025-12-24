@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Game.SingletonHelper
 {
-    public class SingletonBehaviour<T> : MonoBehaviour where T : class
+    public abstract class SingletonBehaviour<T> : MonoBehaviour where T : class
     {
         private static T _instance;
         public static T Instance { get => _instance; }
