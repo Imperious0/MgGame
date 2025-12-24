@@ -11,6 +11,8 @@ namespace Game.SingletonHelper
         {
             if (_instance != null) { Destroy(this); return; }
             _instance = this as T;
+
+            OnAwake();
         }
         protected abstract void OnAwake();
 
