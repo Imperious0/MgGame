@@ -23,6 +23,7 @@ namespace Game.PanelHandler
             {
                 panel.PanelContent.Initialize();
             }
+            _scrollingHandler.Initialize();
         }
     }
 }
