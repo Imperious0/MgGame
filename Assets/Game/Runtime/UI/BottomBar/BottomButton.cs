@@ -2,27 +2,30 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class BottomButton : MonoBehaviour
+namespace Game.Runtime.UI.BottomBar
 {
-    [SerializeField] private string UIContentName;
-
-    [SerializeField] private Button _button;
-
-    public event Action<string> _onButtonClicked;
-
-    public void Initialize(Action<string> onButtonClicked)
+    public class BottomButton : MonoBehaviour
     {
-        _onButtonClicked = onButtonClicked;
-        _button.RegisterCallback<ClickEvent>(OnButtonClicked);
-    }
+        [SerializeField] private string UIContentName;
 
-    public void Dispose()
-    {
-        _button.UnregisterCallback<ClickEvent>(OnButtonClicked);
-    }
+        [SerializeField] private Button _button;
 
-    private void OnButtonClicked(ClickEvent evt)
-    {
-        _onButtonClicked?.Invoke(UIContentName);
+        public event Action<string> _onButtonClicked;
+
+        public void Initialize(Action<string> onButtonClicked)
+        {
+            _onButtonClicked = onButtonClicked;
+            _button.RegisterCallback<ClickEvent>(OnButtonClicked);
+        }
+
+        public void Dispose()
+        {
+            _button.UnregisterCallback<ClickEvent>(OnButtonClicked);
+        }
+
+        private void OnButtonClicked(ClickEvent evt)
+        {
+            _onButtonClicked?.Invoke(UIContentName);
+        }
     }
 }

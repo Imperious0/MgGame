@@ -1,28 +1,32 @@
 using System;
 using System.Collections.Generic;
+using Game.Runtime.UI.BottomBar;
 using UnityEngine;
 
-public class ScrollingHandler : MonoBehaviour
+namespace Game.Runtime.UI.PanelBase.Helper
 {
-    [SerializeField] private List<BottomButton> _bottomButtons;
-
-    public void Initialize()
+    public class ScrollingHandler : MonoBehaviour
     {
-        foreach (var button in _bottomButtons)
+        [SerializeField] private List<BottomButton> _bottomButtons;
+
+        public void Initialize()
         {
-            button.Initialize(OnButtonClicked);
+            foreach (var button in _bottomButtons)
+            {
+                button.Initialize(OnButtonClicked);
+            }
         }
-    }
 
-    public void Dispose()
-    {
-        foreach (var button in _bottomButtons)
+        public void Dispose()
         {
-            button.Dispose();
+            foreach (var button in _bottomButtons)
+            {
+                button.Dispose();
+            }
         }
-    }
 
-    private void OnButtonClicked(string contentName)
-    {
+        private void OnButtonClicked(string contentName)
+        {
+        }
     }
 }

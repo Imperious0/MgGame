@@ -1,9 +1,11 @@
+using TMPro;
 using UnityEngine;
 
-namespace Game.UI.MainMenu
+namespace Game.Runtime.UI.MainMenu
 {
-    public class MainMenuPanel : PanelBase
+    public class MainMenuPanel : PanelBase.PanelBase
     {
+        [SerializeField] private TextMeshProUGUI _levelText;
         protected override void OnInitialize()
         {
             

@@ -1,18 +1,21 @@
 using UnityEngine;
 
-public abstract class PanelBase : MonoBehaviour
+namespace Game.Runtime.UI.PanelBase
 {
-    public void Initialize()
+    public abstract class PanelBase : MonoBehaviour
     {
-        OnInitialize();
+        public void Initialize()
+        {
+            OnInitialize();
+        }
+
+        public void Dispose()
+        {
+            OnDispose();
+        }
+
+        protected abstract void OnInitialize();
+        protected abstract void OnDispose();
+
     }
-
-    public void Dispose()
-    {
-        OnDispose();
-    }
-
-    protected abstract void OnInitialize();
-    protected abstract void OnDispose();
-
 }

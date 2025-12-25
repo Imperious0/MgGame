@@ -2,7 +2,7 @@ using Game.SingletonHelper;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Game.Bootstrapper
+namespace Game.Runtime.Bootstrapper
 {
     public class GameController : SingletonBehaviour<GameController>
     {

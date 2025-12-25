@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Game.Runtime.UI.PanelBase;
+using Game.Runtime.UI.PanelBase.Helper;
 using Game.SingletonHelper;
 using UnityEngine;
 
-namespace Game.PanelHandler
+namespace Game.Runtime.PanelHandler
 {
     [Serializable]
     internal struct PanelCatalog

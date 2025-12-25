@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Models
+namespace Game.Runtime.Models
 {
     public static class UIContentNames
     {
