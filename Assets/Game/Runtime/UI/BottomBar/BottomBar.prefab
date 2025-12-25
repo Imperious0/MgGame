@@ -96,6 +96,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 7171197042603244882}
     m_Modifications:
     - target: {fileID: 324082734513880847, guid: 2e6c0e6e86e47524288ef44402414549, type: 3}
+      propertyPath: _button
+      value: 
+      objectReference: {fileID: 6460184643128133154}
+    - target: {fileID: 324082734513880847, guid: 2e6c0e6e86e47524288ef44402414549, type: 3}
       propertyPath: UIContentName
       value: MainMenuPanel
       objectReference: {fileID: 0}
@@ -204,3 +208,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3953195517015497915, guid: 2e6c0e6e86e47524288ef44402414549, type: 3}
   m_PrefabInstance: {fileID: 736960538601170994}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6460184643128133154 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6025000464227741200, guid: 2e6c0e6e86e47524288ef44402414549, type: 3}
+  m_PrefabInstance: {fileID: 736960538601170994}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 namespace Game.Runtime.UI.BottomBar
 {
@@ -15,15 +15,15 @@ namespace Game.Runtime.UI.BottomBar
         public void Initialize(Action<string> onButtonClicked)
         {
             _onButtonClicked = onButtonClicked;
-            _button.RegisterCallback<ClickEvent>(OnButtonClicked);
+            _button.onClick.AddListener(OnButtonClicked);
         }
 
         public void Dispose()
         {
-            _button.UnregisterCallback<ClickEvent>(OnButtonClicked);
+            _button.onClick.RemoveListener(OnButtonClicked);
         }
 
-        private void OnButtonClicked(ClickEvent evt)
+        private void OnButtonClicked()
         {
             _onButtonClicked?.Invoke(UIContentName);
         }
