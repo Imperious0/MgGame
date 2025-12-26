@@ -6,6 +6,7 @@ namespace Game.Runtime.Models
     {
         public const string MainMenuPanel = nameof(MainMenuPanel);
         public const string ShopPanel = nameof(ShopPanel);
+        public const string InGamePanel = nameof(InGamePanel);
 
 
     }

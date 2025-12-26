@@ -1,3 +1,4 @@
+using Game.Runtime.InitializeHelper;
 using Game.Runtime.UI.InputBlocker;
 using Game.SingletonHelper;
 using UnityEngine;
@@ -8,12 +9,15 @@ namespace Game.Runtime.Bootstrapper
     public class GameController : SingletonBehaviour<GameController>
     {
         private Coroutine _sceneInitializeCoroutine;
+        public string ActiveSceneName { get; private set; }
         protected override void OnAwake()
         {
             Application.targetFrameRate = 60;
             Screen.orientation = ScreenOrientation.Portrait;
 
             DontDestroyOnLoad(this.gameObject);
+
+            ActiveSceneName = Models.SceneNames.InitializeScene;
 
             LoadScene(Models.SceneNames.MainMenuScene);
         }
@@ -38,6 +42,10 @@ namespace Game.Runtime.Bootstrapper
             {
                 yield return null;
             }
+
+            ActiveSceneName = sceneName;
+
+            yield return new WaitUntil(() => InitializeController.Instance && InitializeController.Instance.InitializeCompleted);
 
             _sceneInitializeCoroutine = null;
             InputBlocker.Instance?.Release();
