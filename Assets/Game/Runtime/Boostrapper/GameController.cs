@@ -1,3 +1,4 @@
+using Game.Runtime.UI.InputBlocker;
 using Game.SingletonHelper;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -30,13 +31,16 @@ namespace Game.Runtime.Bootstrapper
 
         private System.Collections.IEnumerator LoadSceneCoroutine(string sceneName)
         {
+            InputBlocker.Instance?.BlockInteractions();
+
             var asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
             while (!asyncLoad.isDone)
             {
                 yield return null;
             }
-            
+
             _sceneInitializeCoroutine = null;
+            InputBlocker.Instance?.Release();
         }
     }
 }

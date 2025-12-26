@@ -1,3 +1,5 @@
+using Game.Runtime.Bootstrapper;
+using Game.Runtime.Models;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +21,7 @@ namespace Game.Runtime.UI.MainMenu
 
         private void StartGame()
         {
-
+            GameController.Instance.LoadScene(SceneNames.GamePlayScene);
         }
     }
 }
