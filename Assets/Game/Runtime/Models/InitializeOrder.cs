@@ -1,6 +1,6 @@
 ﻿using Game.Runtime.Models;
 using Game.Runtime.PanelHandler;
-using Game.Runtime.UI.MainMenu;
+using Game.Runtime.PlayerData;
 using System;
 using System.Collections.Generic;
 
@@ -10,6 +10,13 @@ namespace Game.Runtime.Assets.Runtime.Models
     {
         private static Dictionary<string, IReadOnlyDictionary<Type, int>> _initializeOrderByScenes = new Dictionary<string, IReadOnlyDictionary<Type, int>>()
         {
+            {
+                SceneNames.InitializeScene,
+                new Dictionary<Type, int>()
+                {
+                    { typeof(PlayerDataController), 0 },
+                }
+            },
             {
                 SceneNames.MainMenuScene,
                 new Dictionary<Type, int>()
