@@ -8,7 +8,7 @@ namespace Game.Runtime.Bootstrapper
 {
     public class GameController : SingletonBehaviour<GameController>
     {
-        private Coroutine _sceneInitializeCoroutine;
+        private Coroutine _sceneLoadCoroutine;
         public string ActiveSceneName { get; private set; }
         protected override void OnAwake()
         {
@@ -19,18 +19,24 @@ namespace Game.Runtime.Bootstrapper
 
             ActiveSceneName = Models.SceneNames.InitializeScene;
 
+            StartCoroutine(FinalizeInitializeScene());
+        }
+
+        private System.Collections.IEnumerator FinalizeInitializeScene()
+        {
+            yield return new WaitUntil(() => InitializeController.Instance && InitializeController.Instance.InitializeCompleted);
             LoadScene(Models.SceneNames.MainMenuScene);
         }
 
         public void LoadScene(string sceneName)
         {
-            if(_sceneInitializeCoroutine != null)
+            if(_sceneLoadCoroutine != null)
             {
                 Debug.LogWarning("A scene is already loading.");
                 return;
             } 
 
-            _sceneInitializeCoroutine = StartCoroutine(LoadSceneCoroutine(sceneName));
+            _sceneLoadCoroutine = StartCoroutine(LoadSceneCoroutine(sceneName));
         }
 
         private System.Collections.IEnumerator LoadSceneCoroutine(string sceneName)
@@ -47,7 +53,7 @@ namespace Game.Runtime.Bootstrapper
 
             yield return new WaitUntil(() => InitializeController.Instance && InitializeController.Instance.InitializeCompleted);
 
-            _sceneInitializeCoroutine = null;
+            _sceneLoadCoroutine = null;
             InputBlocker.Instance?.Release();
         }
     }

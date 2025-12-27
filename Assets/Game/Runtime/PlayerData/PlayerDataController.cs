@@ -37,6 +37,8 @@ namespace Game.Runtime.PlayerData
         protected override void OnAwake()
         {
             DontDestroyOnLoad(gameObject);
+
+            InitializeController.Instance.RegisterInitialize(this);
         }
 
         public void Initialize()
