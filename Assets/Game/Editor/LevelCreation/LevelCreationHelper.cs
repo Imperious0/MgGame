@@ -2,6 +2,7 @@
 using Game.Runtime.InGame.Models;
 using Game.Runtime.InGame.Models.Level;
 using Game.Runtime.InGame.Scripts.Interfaces;
+using Game.Runtime.InGame.Scripts.Models;
 using Game.Runtime.JsonUtils.JsonConverters;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Game.Editor.LevelCreation
 {
     public class LevelCreationHelperEditor : EditorWindow
     {
-        private string _folderPath = "Assets/Resources/LevelData";
+        
         private string[] _levelFiles;
         private int _selectedLevelIndex = 0;
         private string _levelNameInput = "Level_1";
@@ -25,6 +26,7 @@ namespace Game.Editor.LevelCreation
         private Camera _cameraRef;
         private GameObject _environmentRoot;
         private GameObject _collectablesRoot;
+        private float _levelDuration;
 
         [MenuItem("Tools/Level Editor")]
         public static void ShowWindow() => GetWindow<LevelCreationHelperEditor>("Level Editor");
@@ -82,6 +84,7 @@ namespace Game.Editor.LevelCreation
             _cameraRef = (Camera)EditorGUILayout.ObjectField("Main Camera", _cameraRef, typeof(Camera), true);
             _environmentRoot = (GameObject)EditorGUILayout.ObjectField("Environment Root", _environmentRoot, typeof(GameObject), true);
             _collectablesRoot = (GameObject)EditorGUILayout.ObjectField("Collectables Root", _collectablesRoot, typeof(GameObject), true);
+            _levelDuration = EditorGUILayout.FloatField("LevelDuration", _levelDuration);
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.Space(10);
@@ -104,8 +107,8 @@ namespace Game.Editor.LevelCreation
             }
 
             string oldFileName = _levelFiles[_selectedLevelIndex];
-            string oldPath = Path.Combine(_folderPath, oldFileName + ".json");
-            string newPath = Path.Combine(_folderPath, fileName + ".json");
+            string oldPath = Path.Combine(GameConstants.LevelsFolder, oldFileName + ".json");
+            string newPath = Path.Combine(GameConstants.LevelsFolder, fileName + ".json");
 
             if (oldFileName != fileName && File.Exists(oldPath))
             {
@@ -130,7 +133,7 @@ namespace Game.Editor.LevelCreation
             var envDict = FetchEnvironmentData();
             var colDict = FetchCollectableData();
 
-            LevelData newLevel = new LevelData(mapData, cameraData, environementRootData, collectablesRootData, envDict, colDict);
+            LevelData newLevel = new LevelData(mapData, cameraData, environementRootData, collectablesRootData, envDict, colDict, _levelDuration);
 
             string json = JsonConvert.SerializeObject(newLevel);
             File.WriteAllText(newPath, json);
@@ -183,8 +186,20 @@ namespace Game.Editor.LevelCreation
 
         void RefreshFileList()
         {
-            if (!Directory.Exists(_folderPath)) Directory.CreateDirectory(_folderPath);
-            _levelFiles = Directory.GetFiles(_folderPath, "*.json").Select(Path.GetFileNameWithoutExtension).ToArray();
+
+            if (!Directory.Exists(GameConstants.LevelsFolder))
+            {
+                Directory.CreateDirectory(GameConstants.LevelsFolder);
+                AssetDatabase.Refresh();
+            }
+
+            string[] guids = AssetDatabase.FindAssets("t:TextAsset", new[] { GameConstants.LevelsFolder });
+
+            _levelFiles = guids
+                .Select(AssetDatabase.GUIDToAssetPath)
+                .Where(path => path.EndsWith(".json")) // Sadece .json olanlarý al (.txt veya .csv gelmesin)
+                .Select(Path.GetFileNameWithoutExtension)
+                .ToArray();
         }
 
         void LoadLevel(string fileName)
@@ -247,6 +262,8 @@ namespace Game.Editor.LevelCreation
                     RebuildGroup(_collectablesRoot.transform, data.CollectableData);
                 }
             }
+
+            _levelDuration = data.LevelDuration;
         }
 
         void ClearScene()

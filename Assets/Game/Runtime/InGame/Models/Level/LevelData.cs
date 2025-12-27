@@ -17,10 +17,13 @@ namespace Game.Runtime.InGame.Models.Level
         [Preserve(typeof(AotEnsureDictionary<CollectableId, List<GameItemData>>))]
         public readonly IReadOnlyDictionary<CollectableId, List<GameItemData>> CollectableData;
 
+        public readonly float LevelDuration;
+
         [JsonConstructor]
         public LevelData(GameItemData mapData, CameraData cameraData, 
             GameItemData environmentRootData, GameItemData collectablesRootData,
-            IReadOnlyDictionary<EnvironmentId, List<GameItemData>> environmentData, IReadOnlyDictionary<CollectableId, List<GameItemData>> collectableData)
+            IReadOnlyDictionary<EnvironmentId, List<GameItemData>> environmentData, IReadOnlyDictionary<CollectableId, List<GameItemData>> collectableData,
+            float levelDuration)
         {
             MapData = mapData;
             CameraData = cameraData;
@@ -28,6 +31,7 @@ namespace Game.Runtime.InGame.Models.Level
             CollectablesRootData = collectablesRootData;
             EnvironmentData = environmentData;
             CollectableData = collectableData;
+            LevelDuration = levelDuration;
         }
     }
 }

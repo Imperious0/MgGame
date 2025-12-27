@@ -1,6 +1,7 @@
 ﻿using Game.Runtime.Models;
 using Game.Runtime.PanelHandler;
 using Game.Runtime.PlayerData;
+using Game.Runtime.Scripts;
 using System;
 using System.Collections.Generic;
 
@@ -28,7 +29,9 @@ namespace Game.Runtime.Assets.Runtime.Models
                 SceneNames.GamePlayScene,
                 new Dictionary<Type, int>()
                 {
-                    { typeof(PanelController), 0 },
+                    { typeof(InGameController), 0 },
+                    { typeof(PanelController), 1 },
+                    { typeof(InGameHandler), 2 },
                 }
             },
         };
