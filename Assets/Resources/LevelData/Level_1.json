@@ -1,0 +1,115 @@
+{
+  "MapData": {
+    "Position": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Rotation": {
+      "x": 90.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Scale": {
+      "x": 3.0,
+      "y": 2.0,
+      "z": 0.0
+    }
+  },
+  "CameraData": {
+    "CameraTRS": {
+      "Position": {
+        "x": 0.0,
+        "y": 1.0,
+        "z": 0.0
+      },
+      "Rotation": {
+        "x": 90.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "Scale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      }
+    },
+    "CameraSize": 1.0
+  },
+  "EnvironmentRootData": {
+    "Position": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Rotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  "CollectablesRootData": {
+    "Position": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Rotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  "EnvironmentData": {
+    "Tree_1": [
+      {
+        "Position": {
+          "x": 0.0,
+          "y": 0.1,
+          "z": 0.0
+        },
+        "Rotation": {
+          "x": 45.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "Scale": {
+          "x": 0.1,
+          "y": 0.200000018,
+          "z": 1.0
+        }
+      }
+    ]
+  },
+  "CollectableData": {
+    "Tower_1": [
+      {
+        "Position": {
+          "x": 0.21,
+          "y": 0.1,
+          "z": 0.0
+        },
+        "Rotation": {
+          "x": 45.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "Scale": {
+          "x": 0.1,
+          "y": 0.2,
+          "z": 1.0
+        }
+      }
+    ]
+  }
+}

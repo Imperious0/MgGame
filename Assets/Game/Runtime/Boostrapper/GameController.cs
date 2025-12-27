@@ -1,6 +1,8 @@
 using Game.Runtime.InitializeHelper;
+using Game.Runtime.JsonUtils.JsonConverters;
 using Game.Runtime.UI.InputBlocker;
 using Game.SingletonHelper;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +18,15 @@ namespace Game.Runtime.Bootstrapper
             Screen.orientation = ScreenOrientation.Portrait;
 
             DontDestroyOnLoad(this.gameObject);
+
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                Formatting = Formatting.None,
+                Converters = new JsonConverter[]
+                {
+                    new Vector3Converter(),
+                }
+            };
 
             ActiveSceneName = Models.SceneNames.InitializeScene;
 
