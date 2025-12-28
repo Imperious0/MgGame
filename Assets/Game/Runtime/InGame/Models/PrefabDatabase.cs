@@ -1,3 +1,4 @@
+using Game.Runtime.PlayerData.Models;
 using Game.Runtime.Scripts.Items;
 using System;
 using System.Collections.Generic;
@@ -38,5 +39,16 @@ namespace Game.Runtime.InGame.Models
         public List<CollectableSprite> collectableSprites = new List<CollectableSprite>();
 
         public Sprite GetCollectableSprite(CollectableId collectableId) => collectableSprites.Find(x => x.id == collectableId).sprite;
+
+        [Serializable]
+        public struct CurrencySprite
+        {
+            public CurrencyType CurrencyType;
+            public Sprite Sprite;
+        }
+
+        public List<CurrencySprite> currencySprites = new List<CurrencySprite>();
+
+        public Sprite GetCurrencySprite(CurrencyType currencyType) => currencySprites.Find(x => x.CurrencyType == currencyType).Sprite;
     }
 }

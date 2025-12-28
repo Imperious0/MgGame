@@ -45,6 +45,7 @@ namespace Game.Runtime.Scripts.UI.Popups.LevelFailed
             {
                 if(PlayerDataController.Instance.Currencies.TrySpendCurrency(CurrencyType.Energy, GameConstants.GameSettings.LevelEnergyAmount))
                 {
+                    PlayerDataController.Instance.SaveCurrencies();
                     GameController.Instance.LoadScene(SceneNames.GamePlayScene);
                 }
                 else

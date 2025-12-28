@@ -1,9 +1,10 @@
-using Game.Runtime.Bootstrapper;
 using Game.Runtime.InGame.Models.Level;
 using Game.Runtime.InGame.Scripts.Utility;
 using Game.Runtime.InitializeHelper;
-using Game.Runtime.Models;
+using Game.Runtime.PanelHandler;
 using Game.Runtime.PlayerData;
+using Game.Runtime.Scripts.UI.LevelFailed;
+using Game.Runtime.Scripts.UI.LevelSuccess;
 using Game.SingletonHelper;
 using UnityEngine;
 
@@ -70,29 +71,20 @@ namespace Game.Runtime.InGame.Scripts.Controller
 
         private void OnTimeOver()
         {
-
+            PanelController.Instance.OpenPopup(new LevelFailedPopupParams());
         }
 
         private void OnAllCollected()
         {
             PlayerDataController.Instance.AccountData.GameLevel += 1;
             PlayerDataController.Instance.SaveAccountData();
-
+            PanelController.Instance.OpenPopup(new LevelSuccessPopupParams());
         }
 
         private void OnSlotFullFail()
         {
-
-        }
-
-        private void LoadMainMenu()
-        {
-            GameController.Instance.LoadScene(SceneNames.MainMenuScene);
-        }
-
-        private void LoadNewGame()
-        {
-            GameController.Instance.LoadScene(SceneNames.GamePlayScene);
+            GameDurationHandler.StopTick();
+            PanelController.Instance.OpenPopup(new LevelFailedPopupParams());
         }
         
     }

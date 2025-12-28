@@ -12,5 +12,6 @@ namespace Game.Runtime.Models
         public const string PausePopup = nameof(PausePopup);
         public const string QuitLevelPopup = nameof(QuitLevelPopup);
         public const string LevelFailedPopup = nameof(LevelFailedPopup);
+        public const string LevelSuccessPopup = nameof(LevelSuccessPopup);
     }
 }

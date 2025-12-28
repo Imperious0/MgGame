@@ -53,6 +53,7 @@ namespace Game.Runtime.PlayerData
         {
             string jsonString = JsonConvert.SerializeObject(_currencies);
             PlayerPrefs.SetString("Currencies", jsonString);
+            PlayerPrefs.Save();
         }
 
         AccountData _accountData;
@@ -82,6 +83,7 @@ namespace Game.Runtime.PlayerData
         {
             string jsonString = JsonConvert.SerializeObject(_accountData);
             PlayerPrefs.SetString("AccountData", jsonString);
+            PlayerPrefs.Save();
         }
     }
 }

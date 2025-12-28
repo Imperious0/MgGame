@@ -4,7 +4,6 @@ using Game.Runtime.JsonUtils.JsonConverters;
 using Game.Runtime.UI.InputBlocker;
 using Game.SingletonHelper;
 using Newtonsoft.Json;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.SceneManagement;

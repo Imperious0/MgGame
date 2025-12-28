@@ -80,7 +80,7 @@ namespace Game.Runtime.InGame.Scripts.World
 
                     collectableItem.Dispose();
 
-                    Object.Destroy(collectableItem);
+                    Object.Destroy(collectableItem.gameObject);
 
                 }
 
