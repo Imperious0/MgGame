@@ -2,6 +2,8 @@ using DG.Tweening;
 using Game.Runtime.InGame.Models;
 using Game.Runtime.InGame.Scripts.Controller;
 using Game.Runtime.InGame.Scripts.Interfaces;
+using Game.Runtime.PanelHandler;
+using Game.Runtime.Scripts.UI.Pause;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -49,8 +51,16 @@ namespace Game.Runtime.UI.InGame
         private void OnPauseClicked()
         {
             InGameController.Instance.GameDurationHandler.StopTick();
+            PanelController.Instance.OpenPopup(new PausePopupParams(OnContinueGame));
         }
-        
+
+        private void OnContinueGame()
+        {
+            PanelController.Instance.ClosePopup();
+            InGameController.Instance.GameDurationHandler.StartTick();
+        }
+
+
         public void Tick(float dt, float udt)
         {
             _timerText.text = InGameController.Instance.GameDurationHandler.GetDurationText();

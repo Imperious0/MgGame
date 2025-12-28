@@ -37,6 +37,12 @@ namespace Game.Runtime.PlayerData
             if (!_currencies.TryAdd(currencyType, earnAmount)) _currencies[currencyType] += earnAmount;
         }
 
+        public bool HasEnoughCurrency(CurrencyType currencyType, int amount)
+        {
+            if (!_currencies.TryGetValue(currencyType, out int currencyAmount)) return false;
+            return amount >= _currencies[currencyType];
+        }
+
         public static Currencies CreateDefault() => new Currencies(new Dictionary<CurrencyType, int>() { { CurrencyType.Coin, 500 }, { CurrencyType.Energy, 5 } });
     }
 }

@@ -6,6 +6,7 @@
 
         public static class GameSettings
         {
+            public const int LevelEnergyAmount = 1;
             public const int MatchItemCount = 3;
             public const int EmptySlotCount = 6;
         }

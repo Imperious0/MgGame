@@ -8,6 +8,9 @@ namespace Game.Runtime.Models
         public const string ShopPanel = nameof(ShopPanel);
         public const string InGamePanel = nameof(InGamePanel);
 
-
+        //Popups
+        public const string PausePopup = nameof(PausePopup);
+        public const string QuitLevelPopup = nameof(QuitLevelPopup);
+        public const string LevelFailedPopup = nameof(LevelFailedPopup);
     }
 }
