@@ -10,7 +10,7 @@ namespace Game.Runtime.InGame.Scripts.Utility
     {
         public static string[] GetLevels()
         {
-            TextAsset[] textAssets = Resources.LoadAll<TextAsset>("Levels");
+            TextAsset[] textAssets = Resources.LoadAll<TextAsset>("LevelData");
             if (textAssets == null || textAssets.Length == 0)
             {
                 throw new FileNotFoundException($"Cant find any of Levels!");
