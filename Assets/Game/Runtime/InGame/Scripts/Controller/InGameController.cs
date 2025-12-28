@@ -44,7 +44,7 @@ namespace Game.Runtime.InGame.Scripts.Controller
 
             CollectableHandler.Initialize();
 
-            CameraHandler = new CameraHandler(Camera.main, LevelData.MapData);
+            CameraHandler = new CameraHandler(Camera.main, LevelData.MapData, availableZoom: 10);
             CameraHandler.Initialize();
 
             GameUpdateHandler.Register(GameDurationHandler);
