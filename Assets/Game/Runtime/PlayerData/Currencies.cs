@@ -6,9 +6,10 @@ using UnityEngine;
 
 namespace Game.Runtime.PlayerData
 {
-    public class Currencies : MonoBehaviour
+    public class Currencies
     {
         [Preserve(typeof(AotEnsureDictionary<CurrencyType, int>))]
+        [JsonProperty("Currencies")]
         private Dictionary<CurrencyType, int> _currencies;
 
         [JsonConstructor]
@@ -36,6 +37,6 @@ namespace Game.Runtime.PlayerData
             if (!_currencies.TryAdd(currencyType, earnAmount)) _currencies[currencyType] += earnAmount;
         }
 
-        public static Currencies CreateDefault() => new Currencies(new Dictionary<CurrencyType, int>() { { CurrencyType.Coin, 500 } });
+        public static Currencies CreateDefault() => new Currencies(new Dictionary<CurrencyType, int>() { { CurrencyType.Coin, 500 }, { CurrencyType.Energy, 5 } });
     }
 }

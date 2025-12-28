@@ -1,8 +1,10 @@
+using Game.Runtime.InGame.Models;
 using Game.Runtime.InitializeHelper;
 using Game.Runtime.JsonUtils.JsonConverters;
 using Game.Runtime.UI.InputBlocker;
 using Game.SingletonHelper;
 using Newtonsoft.Json;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.SceneManagement;
@@ -13,6 +15,9 @@ namespace Game.Runtime.Bootstrapper
     {
         private Coroutine _sceneLoadCoroutine;
         public string ActiveSceneName { get; private set; }
+
+        public PrefabDatabase PrefabDatabase { get; private set; }
+
         protected override void OnAwake()
         {
             Application.targetFrameRate = 60;
@@ -20,6 +25,9 @@ namespace Game.Runtime.Bootstrapper
             EnhancedTouchSupport.Enable();
 
             DontDestroyOnLoad(this.gameObject);
+
+            PrefabDatabase = GetPrefabDatabase();
+            if (PrefabDatabase == null) throw new System.Exception($"Cant find PrefabDatabase!");
 
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings
             {
@@ -33,6 +41,11 @@ namespace Game.Runtime.Bootstrapper
             ActiveSceneName = Models.SceneNames.InitializeScene;
 
             StartCoroutine(FinalizeInitializeScene());
+        }
+
+        private PrefabDatabase GetPrefabDatabase()
+        {
+            return Resources.Load<PrefabDatabase>("PrefabDatabase");
         }
 
         private System.Collections.IEnumerator FinalizeInitializeScene()
@@ -57,14 +70,14 @@ namespace Game.Runtime.Bootstrapper
             InputBlocker.Instance?.BlockInteractions();
 
             InitializeController.Instance.Dispose();
+            
+            ActiveSceneName = sceneName;
 
             var asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
             while (!asyncLoad.isDone)
             {
                 yield return null;
             }
-
-            ActiveSceneName = sceneName;
 
             yield return new WaitUntil(() => InitializeController.Instance && InitializeController.Instance.InitializeCompleted);
 

@@ -25,8 +25,18 @@ namespace Game.Runtime.InGame.Models
             public CollectableItem prefab;
         }
 
-        // Editörden hýzlýca eriþmek için Dictionary'ye çeviren yardýmcý metodlar
         public EnvironmentItem GetEnvironmentPrefab(EnvironmentId id) => environmentPrefabs.Find(x => x.id == id).prefab;
         public CollectableItem GetCollectablePrefab(CollectableId id) => collectablePrefabs.Find(x => x.id == id).prefab;
+
+        [Serializable]
+        public struct CollectableSprite
+        {
+            public CollectableId id;
+            public Sprite sprite;
+        }
+
+        public List<CollectableSprite> collectableSprites = new List<CollectableSprite>();
+
+        public Sprite GetCollectableSprite(CollectableId collectableId) => collectableSprites.Find(x => x.id == collectableId).sprite;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Game.Runtime.InGame.Models;
+﻿using Game.Runtime.Bootstrapper;
+using Game.Runtime.InGame.Models;
 using Game.Runtime.InGame.Models.Level;
 using Game.Runtime.InGame.Scripts.Controller;
 using Game.Runtime.InGame.Scripts.Utility;
@@ -11,8 +12,6 @@ namespace Game.Runtime.InGame.Scripts.World
     internal class InGameHandler : MonoBehaviour, IInitializable
     {
         public bool MarkDisposeOnSceneChange => true;
-
-        [SerializeField] private PrefabDatabase _prefabDatabase;
 
         [SerializeField] private Transform _mapRoot;
         [SerializeField] private Transform _environmentRoot;
@@ -27,7 +26,7 @@ namespace Game.Runtime.InGame.Scripts.World
 
         public void Initialize()
         {
-            _inGameCollectableHandler.Initialize(InGameController.Instance.CollectableHandler, _prefabDatabase);
+            _inGameCollectableHandler.Initialize(InGameController.Instance.CollectableHandler, GameController.Instance.PrefabDatabase);
 
             InGameController.Instance.GameUpdateHandler.Register(_inGameCollectableHandler);
 
@@ -70,7 +69,7 @@ namespace Game.Runtime.InGame.Scripts.World
         }
         TItem CreateItem<TItem> (EnvironmentId environmentId, Transform parent) where TItem : Object
         {
-            return Object.Instantiate<TItem>(_prefabDatabase.GetEnvironmentPrefab(environmentId) as TItem, parent: parent);
+            return Object.Instantiate<TItem>(GameController.Instance.PrefabDatabase.GetEnvironmentPrefab(environmentId) as TItem, parent: parent);
         }
         
        

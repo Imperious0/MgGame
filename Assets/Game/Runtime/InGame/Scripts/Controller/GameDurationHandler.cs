@@ -1,6 +1,7 @@
 ﻿using Game.Runtime.InGame.Scripts.Interfaces;
 using Game.Runtime.InitializeHelper;
 using System;
+using UnityEngine;
 
 namespace Game.Runtime.InGame.Scripts.Controller
 {
@@ -61,6 +62,14 @@ namespace Game.Runtime.InGame.Scripts.Controller
         public void StopTick() 
         {
             _activeTicking = false;
+        }
+
+        public string GetDurationText()
+        {
+            int minutes = Mathf.FloorToInt(_gameDuration / 60);
+            int seconds = Mathf.FloorToInt(_gameDuration % 60f);
+
+            return string.Format("{0:00}:{1:00}", minutes, seconds);
         }
 
     }

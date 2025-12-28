@@ -25,7 +25,7 @@ namespace Game.Runtime.InGame.Scripts.Controller
         private readonly Camera _cam;
         private readonly Plane _detectionPlane;
 
-        public event Action<int> OnItemCollectedEvent;
+        public event Action<CollectableId, int> OnItemCollectedEvent;
 
         private Action _onAllCollectedEvent;
         private Action _onSlotFullFailEvent;
@@ -117,12 +117,21 @@ namespace Game.Runtime.InGame.Scripts.Controller
             int collectableItemIndex = collectableData.FindIndex(t => t.ItemId == collectable.ItemId);
             if (collectableItemIndex == -1) return;
 
+            collectableData.RemoveAt(collectableItemIndex);
+            if (collectableData.Count <= 0) ActiveCollectableDatas.Remove(collectable.CollectableId);
+
+            if (ActiveCollectableDatas.Count <= 0)
+            {
+                _doneInteractions = true;
+                _onAllCollectedEvent?.Invoke();
+            }
+
             if (!CollectableSlots.TryAdd(collectable.CollectableId, new List<int>() { collectable.ItemId }))
             {
                 CollectableSlots[collectable.CollectableId].Add(collectable.ItemId);
             }
 
-            OnItemCollectedEvent?.Invoke(collectable.ItemId);
+            OnItemCollectedEvent?.Invoke(collectable.CollectableId, collectable.ItemId);
 
             if (CollectableSlots[collectable.CollectableId].Count >= GameConstants.GameSettings.MatchItemCount)
             {
@@ -142,14 +151,7 @@ namespace Game.Runtime.InGame.Scripts.Controller
                     }
                 }
 
-                collectableData.RemoveAt(collectableItemIndex);
-                if(collectableData.Count <= 0) ActiveCollectableDatas.Remove(collectable.CollectableId);
-
-                if(ActiveCollectableDatas.Count <= 0)
-                {
-                    _doneInteractions = true;
-                    _onAllCollectedEvent?.Invoke();
-                }
+                
             }
         }
     }

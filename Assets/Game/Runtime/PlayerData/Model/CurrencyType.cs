@@ -3,7 +3,10 @@ namespace Game.Runtime.PlayerData.Models
 {
     public enum CurrencyType
     {
-        Coin = 0,
+        Invalid = 0,
+
+        Coin = 1,
+        Energy = 2,
 
     }
 }

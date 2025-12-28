@@ -3,6 +3,7 @@ using Game.Runtime.InGame.Scripts.Controller;
 using Game.Runtime.InGame.Scripts.Interfaces;
 using Game.Runtime.InGame.Scripts.Utility;
 using Game.Runtime.Scripts.Items;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Runtime.InGame.Scripts.World
@@ -13,6 +14,8 @@ namespace Game.Runtime.InGame.Scripts.World
 
         private CollectableHandler _collectableHandler;
         private PrefabDatabase _prefabDatabase;
+
+        private Dictionary<CollectableId, List<CollectableItem>> _collectableItems;
         public void Initialize(CollectableHandler collectableHandler, PrefabDatabase prefabDatabase)
         {
             _collectableHandler = collectableHandler;
@@ -40,14 +43,19 @@ namespace Game.Runtime.InGame.Scripts.World
                 GameDataUtils.ApplyDataToTransform(_collectableRoot.transform, _collectableHandler.CollectableHolderData);
                 if (_collectableHandler.ActiveCollectableDatas != null)
                 {
+                    _collectableItems = new Dictionary<CollectableId, List<CollectableItem>>();
                     foreach (var kvp in _collectableHandler.ActiveCollectableDatas)
                     {
+                        List<CollectableItem> collectableItems = new List<CollectableItem>();
                         foreach (var kvp2 in kvp.Value)
                         {
                             CollectableItem collectableItem = CreateItem<CollectableItem>(kvp.Key, _collectableRoot.transform);
                             collectableItem.Initialize(kvp2.ItemId);
                             GameDataUtils.ApplyDataToTransform(collectableItem.CollectableTransform, kvp2.GameItemData);
+
+                            collectableItems.Add(collectableItem);
                         }
+                        _collectableItems.Add(kvp.Key, collectableItems);
                     }
                 }
             }
@@ -58,9 +66,26 @@ namespace Game.Runtime.InGame.Scripts.World
             return Object.Instantiate<TItem>(_prefabDatabase.GetCollectablePrefab(collectableId) as TItem, parent: parent);
         }
 
-        private void OnItemCollected(int itemIndex) 
+        private void OnItemCollected(CollectableId collectableId, int itemIndex) 
         {
+            if(_collectableItems.TryGetValue(collectableId, out List<CollectableItem> collectableItems))
+            {
+                int collectableItemIndex = collectableItems.FindIndex(t => t.CollectableId == collectableId && t.ItemId == itemIndex);
 
+                if(collectableItemIndex >= 0)
+                {
+                    CollectableItem collectableItem = collectableItems[collectableItemIndex];
+
+                    collectableItems.RemoveAt(collectableItemIndex);
+
+                    collectableItem.Dispose();
+
+                    Object.Destroy(collectableItem);
+
+                }
+
+                if (collectableItems.Count <= 0) _collectableItems.Remove(collectableId);
+            }
         }
     }
 }

@@ -20,6 +20,8 @@ namespace Game.Runtime.InGame.Scripts.Controller
 
         internal LevelData LevelData { get; private set; }
 
+        internal int ActiveLevel { get; private set; }
+
 
         protected override void OnAwake()
         {
@@ -28,9 +30,9 @@ namespace Game.Runtime.InGame.Scripts.Controller
 
         public void Initialize()
         {
-            int levelIndex = PlayerDataController.Instance.AccountData.GameLevel;
+            ActiveLevel = PlayerDataController.Instance.AccountData.GameLevel;
 
-            LevelData = LevelUtility.GetLevel(levelIndex);
+            LevelData = LevelUtility.GetLevel(ActiveLevel);
 
             GameUpdateHandler = new UpdateHandler();
 
@@ -39,6 +41,7 @@ namespace Game.Runtime.InGame.Scripts.Controller
             GameDurationHandler = new GameDurationHandler(LevelData.LevelDuration, OnTimeOver);
 
             GameDurationHandler.Initialize();
+            GameDurationHandler.StartTick();
 
             CollectableHandler = new CollectableHandler(LevelData.CollectableData, LevelData.CollectablesRootData, OnAllCollected, OnSlotFullFail);
 
@@ -72,7 +75,9 @@ namespace Game.Runtime.InGame.Scripts.Controller
 
         private void OnAllCollected()
         {
-            //PanelController.Instance.;
+            PlayerDataController.Instance.AccountData.GameLevel += 1;
+            PlayerDataController.Instance.SaveAccountData();
+
         }
 
         private void OnSlotFullFail()

@@ -35,16 +35,9 @@ namespace Game.Editor.LevelCreation
         {
             if (_prefabDatabase == null)
             {
-                // Proje genelinde "PrefabDatabase" tipindeki assetleri ara
-                string[] guids = AssetDatabase.FindAssets("t:PrefabDatabase");
-
-                if (guids.Length > 0)
-                {
-                    // Ýlk bulunan asset'in yolunu al ve yükle
-                    string path = AssetDatabase.GUIDToAssetPath(guids[0]);
-                    _prefabDatabase = AssetDatabase.LoadAssetAtPath<PrefabDatabase>(path);
-                }
-                else
+                _prefabDatabase = Resources.Load<PrefabDatabase>("PrefabDatabase");
+                
+                if(_prefabDatabase == null)
                 {
                     Debug.LogError("PrefabDatabase asset could not be found anywhere in the project! Please create one.");
                 }
@@ -90,15 +83,13 @@ namespace Game.Editor.LevelCreation
             EditorGUILayout.Space(10);
 
             EditorGUILayout.BeginHorizontal();
-            string saveButtonText = hasLevels ? "Save As New" : "Create New Level";
-            if (GUILayout.Button(saveButtonText, GUILayout.Height(40))) SaveLevel(_levelNameInput);
 
-            if (hasLevels && GUILayout.Button("Overwrite Selected", GUILayout.Height(40)))
+            if (GUILayout.Button("Save Level", GUILayout.Height(40)))
                 SaveLevel(_levelNameInput);
             EditorGUILayout.EndHorizontal();
         }
 
-        void SaveLevel(string fileName)
+        void SaveLevel(string fileName, bool asNew = false)
         {
             if (_mapRoot == null || _cameraRef == null || _environmentRoot == null || _collectablesRoot == null)
             {
@@ -107,22 +98,7 @@ namespace Game.Editor.LevelCreation
             }
 
             string oldFileName = _levelFiles[_selectedLevelIndex];
-            string oldPath = Path.Combine(GameConstants.LevelsFolder, oldFileName + ".json");
             string newPath = Path.Combine(GameConstants.LevelsFolder, fileName + ".json");
-
-            if (oldFileName != fileName && File.Exists(oldPath))
-            {
-                string assetPath = oldPath;
-                string renameResult = AssetDatabase.RenameAsset(assetPath, fileName);
-
-                if (!string.IsNullOrEmpty(renameResult))
-                {
-                    Debug.LogError($"Failed to rename asset: {renameResult}");
-                    return;
-                }
-
-                AssetDatabase.Refresh();
-            }
 
             GameItemData mapData = ExtractData(_mapRoot.transform);
             CameraData cameraData = new CameraData(ExtractData(_cameraRef.transform), _cameraRef.orthographicSize);
@@ -197,7 +173,7 @@ namespace Game.Editor.LevelCreation
 
             _levelFiles = guids
                 .Select(AssetDatabase.GUIDToAssetPath)
-                .Where(path => path.EndsWith(".json")) // Sadece .json olanlarý al (.txt veya .csv gelmesin)
+                .Where(path => path.EndsWith(".json"))
                 .Select(Path.GetFileNameWithoutExtension)
                 .ToArray();
         }

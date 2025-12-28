@@ -1,6 +1,5 @@
 using Game.Runtime.InGame.Models;
 using Game.Runtime.InGame.Scripts.Interfaces;
-using Game.Runtime.InitializeHelper;
 using UnityEngine;
 
 namespace Game.Runtime.Scripts.Items
@@ -15,6 +14,11 @@ namespace Game.Runtime.Scripts.Items
         public void Initialize(int itemIndex)
         {
             ItemId = itemIndex;
+        }
+
+        public void Dispose()
+        {
+
         }
     }
 }
