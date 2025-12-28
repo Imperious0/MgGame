@@ -1,5 +1,4 @@
 ﻿using Game.Runtime.InGame.Models.Level;
-using Game.Runtime.InGame.Scripts.Models;
 using Newtonsoft.Json;
 using System.IO;
 using System.Linq;
@@ -11,12 +10,13 @@ namespace Game.Runtime.InGame.Scripts.Utility
     {
         public static string[] GetLevels()
         {
-            if (!Directory.Exists(GameConstants.LevelsFolder))
+            TextAsset[] textAssets = Resources.LoadAll<TextAsset>("Levels");
+            if (textAssets == null || textAssets.Length == 0)
             {
                 throw new FileNotFoundException($"Cant find any of Levels!");
             }
 
-            string[] levels = Directory.GetFiles(GameConstants.LevelsFolder, "*.json").Select(Path.GetFileNameWithoutExtension).ToArray();
+            string[] levels = textAssets.Select(t => t.name).ToArray();
 
             return levels;
         }
