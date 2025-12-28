@@ -967,7 +967,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8898622056528538488}
   - component: {fileID: 4310295561926208179}
-  - component: {fileID: 6983145354511729805}
+  - component: {fileID: 4840828149613556196}
   m_Layer: 5
   m_Name: LevelSuccessPopup
   m_TagString: Untagged
@@ -1004,7 +1004,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7774697934953822163}
   m_CullTransparentMesh: 1
---- !u!114 &6983145354511729805
+--- !u!114 &4840828149613556196
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1013,13 +1013,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7774697934953822163}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24b8f08a1df9e92479b8c93fd7f374a6, type: 3}
+  m_Script: {fileID: 11500000, guid: b4d7dedbfd3040348900b2712b6a45c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _contentRoot: {fileID: 2403481574587041114}
-  _closePopup: {fileID: 6136269540446183824}
-  _tryAgainButton: {fileID: 5969161181664298754}
-  _tryAgainButtonText: {fileID: 9013812869498925736}
+  _continueButton: {fileID: 5969161181664298754}
 --- !u!1 &8774930225383597422
 GameObject:
   m_ObjectHideFlags: 0

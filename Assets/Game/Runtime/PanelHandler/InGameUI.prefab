@@ -61,7 +61,7 @@ MonoBehaviour:
   - PopupName: LevelFailedPopup
     PopupContent: {fileID: 4398799551167230741}
   - PopupName: LevelSuccessPopup
-    PopupContent: {fileID: 4686893841450505704}
+    PopupContent: {fileID: 7119134533431435393}
   _scrollingHandler: {fileID: 0}
 --- !u!1 &5353058895548894125
 GameObject:
@@ -320,22 +320,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a915220dfd87f542b087598c786b65f, type: 3}
---- !u!114 &4686893841450505704 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6983145354511729805, guid: 7a915220dfd87f542b087598c786b65f, type: 3}
-  m_PrefabInstance: {fileID: 2441563075049476453}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24b8f08a1df9e92479b8c93fd7f374a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &6529213626746550813 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8898622056528538488, guid: 7a915220dfd87f542b087598c786b65f, type: 3}
   m_PrefabInstance: {fileID: 2441563075049476453}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7119134533431435393 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4840828149613556196, guid: 7a915220dfd87f542b087598c786b65f, type: 3}
+  m_PrefabInstance: {fileID: 2441563075049476453}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d7dedbfd3040348900b2712b6a45c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2832679574939197755
 PrefabInstance:
   m_ObjectHideFlags: 0
