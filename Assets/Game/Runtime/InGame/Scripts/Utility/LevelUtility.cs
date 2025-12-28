@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-namespace Game.Runtime.InGame.Scripts
+namespace Game.Runtime.InGame.Scripts.Utility
 {
     internal static class LevelUtility
     {

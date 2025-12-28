@@ -1,5 +1,6 @@
 using Game.Runtime.InGame.Models;
 using Game.Runtime.InGame.Scripts.Interfaces;
+using Game.Runtime.InitializeHelper;
 using UnityEngine;
 
 namespace Game.Runtime.Scripts.Items
@@ -7,19 +8,13 @@ namespace Game.Runtime.Scripts.Items
     public class CollectableItem : MonoBehaviour, ICollectable
     {
         [SerializeField] private CollectableId _collectableId;
+        public int ItemId { get; private set; }
         public CollectableId CollectableId => _collectableId;
         public Transform CollectableTransform => transform;
 
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        public void Initialize(int itemIndex)
         {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
+            ItemId = itemIndex;
         }
     }
 }

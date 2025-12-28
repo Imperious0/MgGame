@@ -1,0 +1,94 @@
+using Game.Runtime.Bootstrapper;
+using Game.Runtime.InGame.Models.Level;
+using Game.Runtime.InGame.Scripts.Utility;
+using Game.Runtime.InitializeHelper;
+using Game.Runtime.Models;
+using Game.Runtime.PlayerData;
+using Game.SingletonHelper;
+using UnityEngine;
+
+namespace Game.Runtime.InGame.Scripts.Controller
+{
+    public class InGameController : SingletonBehaviour<InGameController>, IInitializable
+    {
+        public bool MarkDisposeOnSceneChange => true;
+
+        internal UpdateHandler GameUpdateHandler { get; private set; }
+        internal GameDurationHandler GameDurationHandler { get; private set; }
+        internal CameraHandler CameraHandler { get; private set; }
+        internal CollectableHandler CollectableHandler { get; private set; }
+
+        internal LevelData LevelData { get; private set; }
+
+
+        protected override void OnAwake()
+        {
+            InitializeController.Instance.RegisterInitialize(this);
+        }
+
+        public void Initialize()
+        {
+            int levelIndex = PlayerDataController.Instance.AccountData.GameLevel;
+
+            LevelData = LevelUtility.GetLevel(levelIndex);
+
+            GameUpdateHandler = new UpdateHandler();
+
+            GameUpdateHandler.Initialize();
+
+            GameDurationHandler = new GameDurationHandler(LevelData.LevelDuration, OnTimeOver);
+
+            GameDurationHandler.Initialize();
+
+            CollectableHandler = new CollectableHandler(LevelData.CollectableData, LevelData.CollectablesRootData, OnAllCollected, OnSlotFullFail);
+
+            CollectableHandler.Initialize();
+
+            CameraHandler = new CameraHandler(Camera.main, LevelData.MapData);
+            CameraHandler.Initialize();
+
+            GameUpdateHandler.Register(GameDurationHandler);
+            GameUpdateHandler.Register(CollectableHandler);
+            GameUpdateHandler.Register(CameraHandler);
+        }
+
+        public void Dispose()
+        {
+            GameDurationHandler.Dispose();
+            CollectableHandler.Dispose();
+            CameraHandler.Dispose();
+
+            GameUpdateHandler.Unregister(GameDurationHandler);
+            GameUpdateHandler.Unregister(CollectableHandler);
+            GameUpdateHandler.Unregister(CameraHandler);
+
+            GameUpdateHandler.Dispose();
+        }
+
+        private void OnTimeOver()
+        {
+
+        }
+
+        private void OnAllCollected()
+        {
+            //PanelController.Instance.;
+        }
+
+        private void OnSlotFullFail()
+        {
+
+        }
+
+        private void LoadMainMenu()
+        {
+            GameController.Instance.LoadScene(SceneNames.MainMenuScene);
+        }
+
+        private void LoadNewGame()
+        {
+            GameController.Instance.LoadScene(SceneNames.GamePlayScene);
+        }
+        
+    }
+}

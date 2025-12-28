@@ -4,6 +4,7 @@ using Game.Runtime.UI.InputBlocker;
 using Game.SingletonHelper;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.SceneManagement;
 
 namespace Game.Runtime.Bootstrapper
@@ -16,6 +17,7 @@ namespace Game.Runtime.Bootstrapper
         {
             Application.targetFrameRate = 60;
             Screen.orientation = ScreenOrientation.Portrait;
+            EnhancedTouchSupport.Enable();
 
             DontDestroyOnLoad(this.gameObject);
 
@@ -53,6 +55,8 @@ namespace Game.Runtime.Bootstrapper
         private System.Collections.IEnumerator LoadSceneCoroutine(string sceneName)
         {
             InputBlocker.Instance?.BlockInteractions();
+
+            InitializeController.Instance.Dispose();
 
             var asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
             while (!asyncLoad.isDone)

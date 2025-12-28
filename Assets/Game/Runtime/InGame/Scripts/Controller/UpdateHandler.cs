@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.LowLevel;
 
-namespace Game.Runtime.InGame.Scripts
+namespace Game.Runtime.InGame.Scripts.Controller
 {
     internal class UpdateHandler
     {

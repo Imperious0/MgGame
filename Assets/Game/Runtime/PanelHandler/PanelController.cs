@@ -19,7 +19,9 @@ namespace Game.Runtime.PanelHandler
     {
         [SerializeField] private List<PanelCatalog> _panelLists;
         [SerializeField] private ScrollingHandler _scrollingHandler;
-        
+
+        public bool MarkDisposeOnSceneChange => true;
+
         protected override void OnAwake()
         {
             InitializeController.Instance.RegisterInitialize(this);
@@ -32,6 +34,16 @@ namespace Game.Runtime.PanelHandler
                 panel.PanelContent.Initialize();
             }
             _scrollingHandler?.Initialize();
+        }
+
+        public void Dispose()
+        {
+            foreach (var panel in _panelLists)
+            {
+                panel.PanelContent.Dispose();
+            }
+
+            _scrollingHandler?.Dispose();
         }
     }
 }

@@ -1,45 +1,49 @@
 ﻿using Game.Runtime.InGame.Scripts.Interfaces;
 using Game.Runtime.InitializeHelper;
-using Game.Runtime.Scripts;
 using System;
 
-namespace Game.Runtime.InGame.Scripts
+namespace Game.Runtime.InGame.Scripts.Controller
 {
-    internal class GameDurationHalder : IInitializable, IUpdatable
+    internal class GameDurationHandler : IUpdatable
     {
         private float _gameDuration;
 
+        private bool _activeTicking;
         private bool _timeOver;
 
         private Action _onTimeOverEvent;
 
-        public GameDurationHalder(float gameDuration, Action onTimeOverEvent = null)
+        public GameDurationHandler(float gameDuration, Action onTimeOverEvent = null)
         {
             _gameDuration = gameDuration;
 
             _onTimeOverEvent = onTimeOverEvent;
+
+            _activeTicking = false;
 
             _timeOver = false;
         }
 
         public void Initialize()
         {
-            InGameController.Instance.GameUpdateHandler.Register(this);
+            _activeTicking = false;
             _timeOver = false;
         }
 
         public void Dispose()
         {
-            InGameController.Instance.GameUpdateHandler.Unregister(this);
         }
 
         public void Tick(float deltaTime, float unscaledDeltaTime)
         {
+            if (!_activeTicking) return;
+
             if (_gameDuration <= 0f)
             {
                 if (!_timeOver)
                 {
                     _timeOver = true;
+                    _activeTicking = false;
                     _onTimeOverEvent?.Invoke();
                 }
                 return;
@@ -48,5 +52,16 @@ namespace Game.Runtime.InGame.Scripts
         }
 
         public bool IsDurationOver => _gameDuration <= 0f;
+
+        public void StartTick()
+        {
+            _activeTicking = true;
+        }
+
+        public void StopTick() 
+        {
+            _activeTicking = false;
+        }
+
     }
 }

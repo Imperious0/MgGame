@@ -7,6 +7,8 @@ namespace Game.Runtime.PlayerData
 {
     public class PlayerDataController : SingletonBehaviour<PlayerDataController>, IInitializable
     {
+        public bool MarkDisposeOnSceneChange => false;
+
         protected override void OnAwake()
         {
             DontDestroyOnLoad(gameObject);

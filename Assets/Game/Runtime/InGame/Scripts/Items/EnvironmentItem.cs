@@ -1,5 +1,6 @@
 using Game.Runtime.InGame.Models;
 using Game.Runtime.InGame.Scripts.Interfaces;
+using Game.Runtime.InitializeHelper;
 using UnityEngine;
 
 namespace Game.Runtime.Scripts.Items
@@ -7,19 +8,12 @@ namespace Game.Runtime.Scripts.Items
     public class EnvironmentItem : MonoBehaviour, IEnvironment
     {
         [SerializeField] private EnvironmentId _environmentId;
+        public int ItemId { get; private set; }
         public EnvironmentId EnvironmentId => _environmentId;
         public Transform EnvironmentTransform => transform;
-
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        public void Initialize(int itemIndex)
         {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
+            ItemId = itemIndex;
         }
     }
 }

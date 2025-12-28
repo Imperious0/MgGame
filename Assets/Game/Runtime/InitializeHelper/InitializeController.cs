@@ -9,8 +9,8 @@ namespace Game.Runtime.InitializeHelper
     public class InitializeController : SingletonBehaviour<InitializeController>
     {
         public bool InitializeCompleted { get; private set; }
-        private Dictionary<int, IInitializable> _orderedPreInitializes = new Dictionary<int, IInitializable>();
-        private Dictionary<int, IInitializable> _postInitializes = new Dictionary<int, IInitializable>();
+        private SortedDictionary<int, IInitializable> _orderedPreInitializes = new SortedDictionary<int, IInitializable>();
+        private SortedDictionary<int, IInitializable> _postInitializes = new SortedDictionary<int, IInitializable>();
 
         private IReadOnlyDictionary<Type, int> _sceneInitializeOrders;
         private int _postInitializeIndex;
@@ -57,6 +57,21 @@ namespace Game.Runtime.InitializeHelper
             foreach (var kvp in _postInitializes)
             {
                 kvp.Value.Initialize();
+            }
+        }
+
+        public void Dispose()
+        {
+            foreach (var kvp in _postInitializes)
+            {
+                if(kvp.Value.MarkDisposeOnSceneChange)
+                    kvp.Value.Dispose();
+            }
+
+            List<int> keys = new List<int>(_orderedPreInitializes.Keys);
+            for (int i = keys.Count - 1; i >= 0; i--)
+            {
+                if (_orderedPreInitializes[i].MarkDisposeOnSceneChange) _orderedPreInitializes[i].Dispose();
             }
         }
 
